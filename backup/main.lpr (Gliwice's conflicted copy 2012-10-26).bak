@@ -1,0 +1,203 @@
+program main;
+
+uses
+    CRT;
+
+label kotwica;
+
+type
+pole = record
+  zakryte : integer ;
+  odkryte : integer ;
+  puste : integer ;
+  bomba : boolean ;
+  obramowka : char;
+end;
+var
+  rozmiar,i,j,b, x,y  : integer;
+  klawisz : char;
+  a : array [1..50,1..50] of pole;
+
+procedure losuj_bomby;
+
+var
+  licznik : integer;
+begin
+licznik:=0;
+repeat
+  begin
+   i:=random(50);
+   j:=random(20);
+   if ((i<>1) and (1<>50)) then
+        begin
+        if (j<>1) and (j<>20) then
+        begin
+          a[i][j].bomba:=true;
+          licznik:=licznik+1;
+        end;
+        end;
+  end;
+until (licznik=20) ;
+
+end;
+
+procedure ruch ;
+begin
+  x:=2;
+  y:=3;
+  kotwica:
+  klawisz:=readkey;
+  case klawisz of
+  'a':; //y:=x+1; gotoxy(x,y);
+  'd':;
+  'w':;
+  's':;
+  ' ':;//odczyt();
+  else write('Zly wybor');
+  end;
+end;
+
+procedure rysuj;// (r : integer);
+
+begin
+  for i:=1 to 50 do
+     begin
+      for j:=1 to 20 do
+         begin
+              if ((j=1) or (j=20)) then
+                 a[i,j].obramowka:='-'
+              else
+                 if((i=1) or (i=50)) then
+                      a[i,j].obramowka:='|'
+                 else
+                     a[i,j].obramowka:='O';
+         end;
+      end;
+  losuj_bomby();
+  for j:=1 to 20 do
+      begin
+        for i:=1 to 50 do
+            begin
+
+              if (a[i][j].bomba=true) then
+                   begin
+                   a[i][j].obramowka:='1';
+                   write(a[i][j].obramowka);
+                   end
+              else}
+                  write(a[i][j].obramowka);
+            end;
+        writeln;
+      end;
+  //losuj_bomby();
+end;
+
+
+
+
+begin
+  clrscr;
+  randomize;
+  TEXTBACKGROUND(lightgray);
+  textcolor(black);
+  writeln ('Witaj w Saperze!');
+  {writeln ('Wybierz sobie rozmiar planszy: ');
+  writeln('1. 20x20 (80 bomb)');
+  writeln('2. 15x15 (50 bomb)');
+  writeln('3. 10x10 (20 bomb');
+  clrscr;
+  readln (rozmiar);
+  case rozmiar of
+  1 : rysuj(50);
+  2 : rysuj(40);
+  3 : rysuj(30);
+  else writeln('Podales nieprawidlowy wybor!');
+  }
+
+  rysuj();
+  gotoxy(2,3);
+
+  cursorbig;
+  //repeat ruch() until(odczyt=0);
+  {writeln('...... .  ..............                                                                        ........................');
+  writeln('........................                                                                        ........................');
+  writeln('........................       ................................                                 ........................');
+  writeln('. ...................... . IZ8NNMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN8ZI~,....  ....  .   . .   . .   ........................');
+  writeln('. ................... ...MMMMMMMMMMMMMMMMMMNDDOZ77IIIII7$8DNMMMMMMMMMMMMMMMMMMDI, ......        ........................');
+  writeln('. ....................,MMMD .    ...      ...?DMN888NNMMMNO?:....... . . ,7ND8MMMMMMMMMNI.. . ..........................');
+  writeln('. .................. MMMO..          . .:MN~.    . .          ...:IONMNDZ$7$Z8MZ~.:?DMMMMMM+.   ........................');
+  writeln('............  .   ..MMM.....  . . ...8M,... ..,+8MMMMMMMMN+.. .               ......... .$MMMM... ......................');
+  writeln('............      :MMM..       . .IM....,$MD~ . . .     .... :ODI~:,,,:=IZNMMMM87:.,. ZM..  DMMM+.......................');
+  writeln('............ .. ..MMM.  . ..  .,M . .+M$ ,.....,,:~++=,...     . . ..  .... .. . .  ... ..    DMMMI.....................');
+  writeln('............    ,MMZ.     ...N .. :M:.,8MM~  .        ?N..            .,.:8MMMMMMNI ...        .DMMM....................');
+  writeln('............  . MMM..   . .M....:M...8I.  . ..          M.            ,D...      .  .MM ..       .MMM ..................');
+  writeln('............  .MMM. .    ,..  :M .MM....                 M              +O.         .. NI.      .  MM ..................');
+  writeln('............  OMM.  .      ..N:..M..  .    ..            M              $..           ..$.      .. MM...................');
+  writeln('............ ,MM,         .... .M.     ,NMMMMMMMMN~ ..   $              .              ..,      .. MM...................');
+  writeln('            OMMI.       ......... ..MMMMMMMMMMMMMMMMMMD.............................. ............ NMM. ................');
+  writeln('          ,MMMM.  . .   ...  ... .MMMMMMMMMMMMMM....7MMMM.  .............. +MMMMMMMMMMD.............MMM? ...............');
+  writeln('        .MMMMMMMMNZ+ .  ..  =N8 .MMM..MMMMMMMMM....   .MMMO.......      $MMMMMMMD. .MMMMD    . .    .,MMM=..............');
+  writeln('      .8MMMMDD7+::,,::.....MMD .OMMMMMMMMMMMMMMMMMMD .. MMM+ ......8O:.MMMMMMMMMMMMMMMMMI .?88Z?::?M. .8MMM.............');
+  writeln('      MMM8N?.  ...=ONMDZ. .. :M  .+=........=.. :DMMMMMMMMM. ..... MMMMMMMMMMN$+:................. .,M ..MMM  ..........');
+  writeln('   .,MMN.M . . MMMMMMMMMMMM8  .  .....   NMMM....... OMMM ............MMN ................    ....8M~ :M:.MMN ..........');
+  writeln('  ..MM?.M... 8MMM, .. ..,MMMMMM=.... ..MMMM? ........................ ZMM.........  ....  7MMMMMMM...M.. ,OM8 ..........');
+  writeln('  .MMM..$.  NMM...  .ZM:.. ,NMMMMMMMMMMMM: .......................... ZMM........ =$. ..+MMMMMMMMMMM.7. .MOMN...........');
+  writeln('  .MM  .? .7MM..     MM7 ..........,::............................... ZMM,  ......MMMMMMMM8 . ...,MZ..:  M$MM ..........');
+  writeln(' .OMZ. .? .MMZ.   ...MMMMN.......................  .. . . ............ MMMM,... . .,MMMMMM..ZM. ......~  N7MM...........');
+  writeln(' .NM$  .Z..MM:... DMMM+8MMMMMZ ..................,M=MMMMMM............. .:MMMM ......   .. .MM..... .....=DMM ..........');
+  writeln(' .OMM   M. NMD.NMMMMMM,... 8MMMMM.. . .  MMZ78NMN:.MMO....... .............MMMMM............MMI.  ..MN . ,MM8 ..........');
+  writeln(' . MM,..M. ,MM~..  .MMM. ..   MMMMMM+ ........  ...MM ..,NMMMMZ............MMMMMM.......... MMMM. . ... MMMM............');
+  writeln('   MMM..?.  MMM...  .MMM ..... . MMMMMMMN+ ....... MMM:.MMMNMMMM,.........MMM=N.. .$M..... MMMMM:...7M+.~MMZ. ..........');
+  writeln('   .MMM..D..,ZM.     MMMMO...... MM. =NMMMMMMN~.... MMM  .. . .  ..~?...DMMO .. .   . ...ZMMMMMMO.?,.. ,MMO ............');
+  writeln('     MMM. =MZ..     ..MMMMMMN, . MMI. .....$MMMMMMMM? .. ..........MMMMMMM........... .MMMMMMMMMM..... MMO..............');
+  writeln('   .. MMM,. ..:.    . .OMMMMMMMMOMMM. .....   . ?MMMMMMMMD+. .......,O88:  .........ZMMMMMZ MMMMM ....MMM...............');
+  writeln('       ZMMMMO...        NMM. IMMMMMMMN... .... .?MM.:$MMMMMMMMMMMNO?~,.......:IDMMMMMM+.ZMM .MMMM ....MM. ..............');
+  writeln('       ..MMM:..         .MMM ....MMMMMMMMD,.. ..MMM...... ..:8MMNMMMMMMMMMMMMMMMNMMM~.. .MM..MMMM..  OMN................');
+  writeln('      . ..ZMMM..        ..8MM   .MMMMMMMMMMMMMO.MM:...........MM. ......MM:.......MMM.. +MM.,MMMM..  MMO................');
+  writeln('          . MMM.        .. ?MM7..8MM  .$MMMMMMMMMMZ,... ......MM. ......MM:...... .MM7..MMMMMMMMM.. .MM7................');
+  writeln('            :MM?..      ... .MMMDMM+. . ..,MMMMMMMMMMMMMM$:..,MM+=~~~~~~MM?.,:ZMMMMMMMMMMMMMMMMMM..  MM7................');
+  writeln('        .   .MMM..      ......MMMMD...........,MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM ...MM7................');
+  writeln('      . ..   .MMM.      ......  MMM+. ....... ,MM....DMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMN ...MMZ ...............');
+  writeln('              ,MMM.     ....... .,MMM8........MMM..   . .=NMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM~ .  MMD ...............');
+  writeln('              . MMM..   ......... .,MMMO.  ..DMM. ..........MM..IMMMMMMMMMMMMMMMMMMMMMMMM?MMM?MM. ...DMN................');
+  writeln('        .      ..=MMM.  ............. MMMMI..MM   ..........MM .... . .MMM... .MM7...MM:.MMN.MMD. . .?MM................');
+  writeln('      . ..         MMM,.................NMMMMMN........... .MM .......~MM.....$MM...MMM..MMMMMM....  .MM ...............');
+  writeln('      . ..         .:MMM.. DM....,MN.......ZMMMMMO,  .  .  .MM ...... MM$..  .MM7 .8MM,.,DMMMM........MM ...............');
+  writeln('                    ..MMMM....M$....~MZ    ...,NMMMMMMMDI:.~MM. ... . MMO.  .MMM.=MMMMMMMMM:..........MM ...............');
+  writeln('        .              :MMMMI.. :MZ....,M:. ..... .?MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMZ...  ..........MM,...............');
+  writeln('                        ..INMMM8. ..DM~....ZM$...  ............,~=?I7777I+~,...................... ...MM?...............');
+  writeln('      . ..              .....7MMMM.....=MZ. . ,NM=     ...... ..  . ..     .  .  ...... ...M.....8....NMD...............');
+  writeln('                        ........MMMMM~ . .. DN. .. MM$.. ......    .......... ........  .M.......$....OMM...............');
+  writeln('        .               ........  MMMMMMM$ .....=M7....,OMZ,.........................?M . . ....$+....IMM...............');
+  writeln('                        ..............:MMMMMM     ....$M8, .    ........... ..  ............  M?......=MM...............');
+  writeln('      . ..              .............. .. ~MMMMM:..... .  .   :8MMZ:.......................MO. .......~MM...............');
+  writeln('                        ..................   ~MMMMM ...........      .  . ..::?$ZO888D8OZ$. ..........MMM...............');
+  writeln('      . ..              ........................~MMMMM...............................................MMM................');
+  writeln('                        ........................  .~MMMMMMMD?. ... ................................ MMM.................');
+  writeln('      . ..              ..........................    .NMMMMMMMMMM? .............................,MMM8 .................');
+  writeln('        .               ......................................:DMMMMMMMN~................... .$MMMM7. ..................');
+  writeln('      . ..              .......................................... ,ZMMNMMMMMMD7+:,,.,:+ZNMMMMMMN.......................');
+  writeln('                        ...........................................     .~OMMMMMMMMMMMMMMMMMO,...  .....................');
+  writeln('      . ..              .................................................    .   ... .... . . ..........................');
+  writeln('        .               ................................................................................................');
+  writeln('................................................................................................');
+  writeln('......................................................... ......................................  .. ,  ..');
+  writeln('..............................................MMMM........,MMMM.................................  MMMMMMMN .');
+  writeln('..............................................MMMM........,MMMM................................. MMMMZ8MMMM.');
+  writeln('............MMM~8MMMM ..~MMM.MMMI  OMMMMMO. ..MMMMZMMMM...,MMMM....MMMMMMO....MMM=ONMMM .MMMMI. +DMM.  MMMM.');
+  writeln('............MMMMMMMMMM..~MMMMMMM ZMMMMMMMMM...MMMMMMMMMM~.,MMMM. DMMMM?MMMM,  MMMMMMMMMMMMMMMM$.  .  MMMMM.');
+  writeln('............MMMM..,MMMD.~MMMM,...MMMN.. MMMM..MMMM...MMMM.,MMMM.:MMMM.  MMMM..MMMM..MMMM~..MMMN.  ..MMMM~.');
+  writeln('............MMMN...MMMM ~MMM$....MMM= . MMMM..MMMM. .MMMM.,MMMM.?MMMMMMMMMMM..MMMN..NMMM...MMMN   .~MMM .');
+  writeln('............MMMM..IMMM8.~MMM+ .. MMMM.  MMMM..MMMM,.+MMMM.,MMMM..MMMM...... ..MMMN..NMMM...MMMN    7NNN,.');
+  writeln('............MMMMMMMMMM..~MMM+... :MMMMMMMMM...MMMMMMMMMM  .MMMM. ~MMMMMMMMM:..MMMN..NMMM. .MMMN.   ZMMM.');
+  writeln('............MMMN,DMM=...~888=....  .8MMM$ ....888= NMM: . .8888....~DMMMD.....D88O..OD8D. .D88O.   I888,.');
+  writeln('............MMMM  . ................................... ..  ............. .............   ....     .    .');
+  writeln('............MMMN................................................................................');
+  writeln('................................................................................................');
+  writeln('................................................................................................');
+  writeln('................................................................................................');}
+
+  readln;
+
+
+end.

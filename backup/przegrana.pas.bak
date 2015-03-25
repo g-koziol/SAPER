@@ -1,0 +1,16 @@
+program przegrana;
+
+uses
+  crt;
+
+var
+   klawisz : charl
+begin
+     clrscr;
+          writeln('SAPER MYLI SIE TYLKO RAZ!');
+          writeln('PRZEGRALES!!!!');
+          writeln('Jeszcze raz?? [T/N]');
+          readln(klawisz);
+          if ((klawisz='T' or klawisz='t')) then
+
+end.

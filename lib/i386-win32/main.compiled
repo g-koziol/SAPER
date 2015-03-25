@@ -1,0 +1,5 @@
+<?xml version="1.0"?>
+<CONFIG>
+  <Compiler Value="E:\Programy\lazarus\fpc\2.6.0\bin\i386-win32\fpc.exe" Date="1092378901"/>
+  <Params Value=" -MObjFPC -Scghi -O1 -gw2 -godwarfsets -gl -vewnhi -l -FiI:\SAPER\lib\i386-win32 -FuI:\SAPER\ -FUI:\SAPER\lib\i386-win32\ main.lpr"/>
+</CONFIG>
